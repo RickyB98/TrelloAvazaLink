@@ -117,9 +117,11 @@ class DefaultController extends Controller
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_exec($curl);
+
+        $response = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
         curl_close($curl);
 
-        if (curl_getinfo($curl, CURLINFO_RESPONSE_CODE) !== 200) return false;
+        if ($response !== 200) return false;
 
         return true;
     }
