@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,19 +79,19 @@ class DefaultController extends Controller
 
         if (!in_array($this->getParameter("trello")['userId'], $card['idMembers'])) return new Response("OK", 200);
 
-        if (!file_exists("../app/config/avaza.json")) return new Response("No config found.", 500);
+        if (!file_exists("../app/config/avaza.json")) throw new InternalErrorException("No config found.", 500);
         $json = json_decode(file_get_contents("../app/config/avaza.json"), true);
         if (!isset($json['access_token'])) {
             $json = $this->refresh($json);
         }
         if (!isset($json['access_token'])) {
-            return new Response("Couldn't authenticate.", 500);
+            throw new InternalErrorException("Couldn't authenticate.", 500);
         }
 
         if (!$this->addTask($card, $json['access_token'])) {
             $json = $this->refresh($json);
             if (!$this->addTask($card, $json['access_token'])) {
-                return new Response("Couldn't authenticate.", 500);
+                throw new InternalErrorException("Couldn't authenticate.", 500);
             }
         }
 
