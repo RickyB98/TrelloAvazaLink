@@ -101,7 +101,7 @@ class DefaultController extends Controller
 
 
     private function addTask($card, $accessToken) {
-        $curl = curl_init("https://any.avaza.com/");
+        $curl = curl_init("https://api.avaza.com/api/Task");
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             "Content-Type: application/x-www-form-urlencoded",
