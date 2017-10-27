@@ -1,5 +1,6 @@
 /.web-server-pid
 /app/config/parameters.yml
+/app/config/avaza.json
 /build/
 /phpunit.xml
 /var/*
@@ -15,3 +16,7 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+
+# Idea
+.idea/
+*.iml
