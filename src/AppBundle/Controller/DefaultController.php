@@ -123,7 +123,7 @@ class DefaultController extends Controller
         curl_close($curl);
 
         if ($response !== 200) {
-            throw new InternalErrorException($result, $response);
+            return false;
         }
 
         return true;
